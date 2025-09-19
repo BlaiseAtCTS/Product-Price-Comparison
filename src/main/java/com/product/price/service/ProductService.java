@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-@Component
 public class ProductService {
     public ProductService() {
     }

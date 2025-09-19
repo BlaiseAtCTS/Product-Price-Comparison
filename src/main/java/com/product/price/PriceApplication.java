@@ -1,24 +1,21 @@
 package com.product.price;
 
 import com.product.price.service.ProductService;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.*;
 
-@SpringBootApplication
 public class PriceApplication {
 
 	public static void main(String[] args) {
-        ApplicationContext context = SpringApplication.run(PriceApplication.class, args);
+        ApplicationContext context = new ClassPathXmlApplicationContext("com/product/price/config/applicationContext.xml");
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number of products: ");
         int numOfProd = sc.nextInt();
         sc.nextLine();
         int id = 0;
-        ProductService productService = new ProductService();
+        ProductService productService = context.getBean("productService", ProductService.class);
         for(int i=0; i<numOfProd; i++) {
             System.out.println("Enter name: ");
             String name = sc.nextLine();
@@ -37,7 +34,7 @@ public class PriceApplication {
                 array.forEach((prod) -> System.out.println("ID: "+prod.getId()+" Name: "+prod.getName()+" Price: "+prod.getPrice()));
             }
             else if(choice.equals("2")) {
-                TreeSet<Product> set = new TreeSet<>();
+                TreeSet<Product> set;
                 set = productService.getProductsSortedByPrice();
                 set.forEach((prod) -> System.out.println("ID: "+prod.getId()+" Name: "+prod.getName()+" Price: "+prod.getPrice()));
             }
